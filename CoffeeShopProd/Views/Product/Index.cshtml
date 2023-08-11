@@ -6,7 +6,7 @@
 }
 <h1>Menu</h1>
 
-@{
+@*@{
     foreach (Product p in Model)
     {
         <a class="nav-link text-dark p=0" asp-action="Details" asp-route-id="@p.Id">
@@ -14,6 +14,24 @@
                 <p>@p.Id, @p.Name, $@p.Price</p>
         </div>
         </a>
+    }
+}
+*@
+
+
+@* Show a list of categories on the index view,
+   then let the user click to see a list of only the products in that category. *@
+@{
+    List<Product> DistinctCategories = Model.DistinctBy(p => p.Category).ToList();
+    foreach (Product c in DistinctCategories)
+    {
+        <h2>@c.Category</h2>
+        foreach(Product p in Model.Where(p => p.Category == c.Category))
+        {
+            <a class="nav-link text-dark p=0" asp-action="Details" asp-route-id="@p.Id">
+            <p class="card">@p.Id, @p.Name, $@p.Price</p>
+            </a>
+        }
     }
 }
 
