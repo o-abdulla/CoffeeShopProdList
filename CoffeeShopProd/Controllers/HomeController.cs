@@ -15,6 +15,7 @@ namespace CoffeeShopProd.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.Name = "Coffee Shop";
             return View();
         }
 
